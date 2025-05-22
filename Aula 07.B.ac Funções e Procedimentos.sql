@@ -16,9 +16,13 @@ SET @intervaloMaximo = (SELECT CEILING(MAX(instructor.salary)) FROM instructor);
 
 SET @tamanhoIntervalo = CEILING((@intervaloMaximo-@intervaloMinimo)/@number_interval); 
 
+PRINT 'Intervalo mínimo: ' + CAST(@intervaloMinimo as nvarchar(20));
+PRINT 'Intervalo máximo: ' + CAST(@intervaloMaximo as nvarchar(20));
+PRINT 'Tamanho do intervalo: ' + CAST(@tamanhoIntervalo as nvarchar(20));
+
 SET @limiteAtual = @intervaloMinimo;
 
-WHILE (@limiteAtual + @tamanhoIntervalo < @intervaloMaximo)
+WHILE (@limiteAtual + @tamanhoIntervalo + 1 < @intervaloMaximo)
   BEGIN
   INSERT INTO @LocationTVP VALUES (@limiteAtual, @limiteAtual + @tamanhoIntervalo);
   SET @limiteAtual = @limiteAtual + @tamanhoIntervalo;
